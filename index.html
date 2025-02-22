@@ -1,64 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Flight Booking</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .seat { display: inline-block; padding: 10px; margin: 5px; border: 1px solid black; cursor: pointer; }
-        .booked { background-color: red; cursor: not-allowed; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enter Username</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Book Your Flight Seat</h1>
-    <input type="text" id="username" placeholder="Enter your Roblox username">
-    <div id="seats"></div>
-    <button onclick="submitBooking()">Book Seat</button>
+  <div class="form-container">
+    <h1>Enter Your Username</h1>
+    <form id="usernameForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
 
-    <script>
-        const webhookURL = "YOUR_DISCORD_WEBHOOK_URL_HERE";
-        let bookedSeats = new Set();
-
-        function generateSeats() {
-            const seatsContainer = document.getElementById("seats");
-            for (let i = 1; i <= 10; i++) {
-                let seat = document.createElement("div");
-                seat.textContent = "Seat " + i;
-                seat.classList.add("seat");
-                seat.onclick = function() { selectSeat(seat, i); };
-                seatsContainer.appendChild(seat);
-            }
-        }
-
-        let selectedSeat = null;
-        function selectSeat(seat, seatNumber) {
-            if (bookedSeats.has(seatNumber)) return;
-            document.querySelectorAll(".seat").forEach(s => s.style.background = "");
-            seat.style.background = "lightgreen";
-            selectedSeat = seatNumber;
-        }
-
-        function submitBooking() {
-            const username = document.getElementById("username").value;
-            if (!username || selectedSeat === null) {
-                alert("Please enter a username and select a seat.");
-                return;
-            }
-            bookedSeats.add(selectedSeat);
-            document.querySelectorAll(".seat")[selectedSeat - 1].classList.add("booked");
-            sendToDiscord(username, selectedSeat);
-        }
-
-        function sendToDiscord(username, seatNumber) {
-            fetch(webhookURL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ content: `🚀 ${username} booked Seat ${seatNumber}!` })
-            });
-        }
-
-        generateSeats();
-    </script>
+  <script>
+    document.getElementById("usernameForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const username = document.getElementById("username").value;
+      localStorage.setItem('username', username);
+      window.location.href = 'seats.html';
+    });
+  </script>
 </body>
 </html>
