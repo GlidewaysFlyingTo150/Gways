@@ -1,68 +1,16 @@
-body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #f0f0f0;
-}
-
-.form-container {
+.seat {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 5px;
   text-align: center;
-}
-
-input {
-  padding: 10px;
-  margin: 10px;
-  font-size: 16px;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
+  line-height: 40px;
+  background-color: gray;
   cursor: pointer;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
   border-radius: 5px;
 }
 
-button:hover {
-  background-color: #45a049;
-}
-
-.seat-layout {
-  text-align: center;
-}
-
-.aircraft {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.row {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-.seat {
-  width: 50px;
-  height: 50px;
-  background-color: #ddd;
-  margin: 5px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.seat:hover {
-  background-color: #bbb;
-}
-
-.selected {
-  background-color: #4CAF50;
+.seat.selected {
+  background-color: green;
   color: white;
 }
