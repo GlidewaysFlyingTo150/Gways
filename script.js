@@ -1,62 +1,44 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Check if we are on the username entry page
-    if (document.getElementById("usernameForm")) {
-        const form = document.getElementById("usernameForm");
+const googleSheetsURL = "https://script.google.com/macros/s/AKfycbxLa__jsovsZPm00VRSg_IWLY7i9YshaY4bE6AgLavJxgDsdSGFJ57qBH91gx8FJNHoLw/exec";
 
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
+// Handle seat selection and booking
+document.getElementById("confirm-seat").addEventListener("click", function () {
+    const username = localStorage.getItem("username");
+    const selectedSeat = localStorage.getItem("selectedSeat");
 
-            const username = document.getElementById("username").value;
-            localStorage.setItem("username", username); // Store username
-
-            window.location.href = "seats.html"; // Redirect to seat selection
-        });
+    if (!selectedSeat) {
+        alert("Please select a seat first.");
+        return;
     }
 
-    // Check if we are on the seat selection page
-    if (document.getElementById("displayUsername")) {
-        const username = localStorage.getItem("username");
-        if (username) {
-            document.getElementById("displayUsername").textContent = username;
+    fetch(googleSheetsURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: username, seat: selectedSeat }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            alert(`Seat ${selectedSeat} booked successfully!`);
+            loadSeats(); // Refresh booked seats
         } else {
-            window.location.href = "index.html"; // Redirect back if no username found
+            alert(data.message);
         }
-
-        // Generate seat layout dynamically
-        generateSeats();
-
-        // Handle seat selection
-        document.getElementById("seat-map").addEventListener("click", function (event) {
-            if (event.target.classList.contains("seat")) {
-                document.querySelectorAll(".seat").forEach(seat => seat.classList.remove("selected"));
-                event.target.classList.add("selected");
-                localStorage.setItem("selectedSeat", event.target.dataset.seat);
-            }
-        });
-
-        // Confirm seat selection
-        document.getElementById("confirm-seat").addEventListener("click", function () {
-            const selectedSeat = localStorage.getItem("selectedSeat");
-            if (selectedSeat) {
-                alert(`Seat ${selectedSeat} booked!`);
-                // You can add webhook logic here
-            } else {
-                alert("Please select a seat first.");
-            }
-        });
-    }
+    })
+    .catch(error => alert("Error booking seat: " + error));
 });
 
-// Function to generate seat layout dynamically
-function generateSeats() {
-    const seatMap = document.getElementById("seat-map");
-    if (!seatMap) return;
-
-    for (let i = 1; i <= 10; i++) {
-        const seat = document.createElement("div");
-        seat.classList.add("seat");
-        seat.textContent = i;
-        seat.dataset.seat = i;
-        seatMap.appendChild(seat);
-    }
+// Load booked seats from Google Sheets
+function loadSeats() {
+    fetch(googleSheetsURL)
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(booking => {
+            const seatElement = document.querySelector(`[data-seat='${booking.seat}']`);
+            if (seatElement) {
+                seatElement.classList.add("booked");
+                seatElement.style.backgroundColor = "red"; // Mark booked seats
+            }
+        });
+    })
+    .catch(error => console.error("Error loading seats: ", error));
 }
