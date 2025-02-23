@@ -1,33 +1,62 @@
-// This script is for handling the username form submission and seat selection.
+document.addEventListener("DOMContentLoaded", function () {
+    // Check if we are on the username entry page
+    if (document.getElementById("usernameForm")) {
+        const form = document.getElementById("usernameForm");
 
-let selectedSeat = null;
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
 
-// Handle the username form submission
-document.getElementById("usernameForm").addEventListener("submit", function(event) {
-  event.preventDefault(); // Prevent form from reloading the page
-  const username = document.getElementById("username").value; // Get the entered username
-  localStorage.setItem('username', username); // Store the username in local storage
-  window.location.href = 'seats.html'; // Redirect to the seat selection page
-});
+            const username = document.getElementById("username").value;
+            localStorage.setItem("username", username); // Store username
 
-// Handle seat selection
-document.querySelectorAll('.seat').forEach(seat => {
-  seat.addEventListener('click', function() {
-    if (selectedSeat) {
-      selectedSeat.classList.remove('selected'); // Remove highlight from the previous seat
+            window.location.href = "seats.html"; // Redirect to seat selection
+        });
     }
-    selectedSeat = this; // Set the new selected seat
-    selectedSeat.classList.add('selected'); // Add highlight to the selected seat
-  });
+
+    // Check if we are on the seat selection page
+    if (document.getElementById("displayUsername")) {
+        const username = localStorage.getItem("username");
+        if (username) {
+            document.getElementById("displayUsername").textContent = username;
+        } else {
+            window.location.href = "index.html"; // Redirect back if no username found
+        }
+
+        // Generate seat layout dynamically
+        generateSeats();
+
+        // Handle seat selection
+        document.getElementById("seat-map").addEventListener("click", function (event) {
+            if (event.target.classList.contains("seat")) {
+                document.querySelectorAll(".seat").forEach(seat => seat.classList.remove("selected"));
+                event.target.classList.add("selected");
+                localStorage.setItem("selectedSeat", event.target.dataset.seat);
+            }
+        });
+
+        // Confirm seat selection
+        document.getElementById("confirm-seat").addEventListener("click", function () {
+            const selectedSeat = localStorage.getItem("selectedSeat");
+            if (selectedSeat) {
+                alert(`Seat ${selectedSeat} booked!`);
+                // You can add webhook logic here
+            } else {
+                alert("Please select a seat first.");
+            }
+        });
+    }
 });
 
-// Handle booking seat
-document.getElementById("bookSeat").addEventListener("click", function() {
-  if (selectedSeat) {
-    const username = localStorage.getItem('username'); // Get the stored username
-    alert(`${username}, you've selected ${selectedSeat.id}`);
-    // You can add further functionality like sending booking data here
-  } else {
-    alert('Please select a seat first.');
-  }
-});
+// Function to generate seat layout dynamically
+function generateSeats() {
+    const seatMap = document.getElementById("seat-map");
+    if (!seatMap) return;
+
+    for (let i = 1; i <= 10; i++) {
+        const seat = document.createElement("div");
+        seat.classList.add("seat");
+        seat.textContent = i;
+        seat.dataset.seat = i;
+        seatMap.appendChild(seat);
+    }
+}
