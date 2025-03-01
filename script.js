@@ -1,4 +1,5 @@
-const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwrpR9vZLqGiKBjXoSv8BT_a7AwPoGnHAFji3r-kN7MsSRIDisO6y0zCUVV9ElzZ2JP/exec";
+const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwrpR9vZLqGiKBjXoSv8BT_a7AwPoGnHAFji3r-kN7MsSRIDisO6y0zCUVV9ElzZ2JP/exec"; 
+
 document.addEventListener("DOMContentLoaded", function () {
     const usernameForm = document.getElementById("usernameForm");
     if (usernameForm) {
@@ -6,14 +7,14 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
             const username = document.getElementById("username").value;
             localStorage.setItem("username", username);
-            window.location.href = "seats.html";
+            window.location.href = "seats.html"; // Redirect to seat selection page
         });
     }
 
     const seatContainer = document.getElementById("seat-container");
     if (seatContainer) {
-        createSeatLayout(); // 2 columns, 2 seats per row, 21 rows
-        loadSeats();
+        createSeatLayout(); // Create seat layout on page load
+        loadSeats(); // Load booked seats from Google Sheets
     }
 
     const confirmButton = document.getElementById("confirm-seat");
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Create seat layout with 2 columns, 21 rows, 2 seats per row
+// Create seat layout with 2 columns, 2 seats per row, 21 rows
 function createSeatLayout() {
     const seatContainer = document.getElementById("seat-container");
     if (!seatContainer) return;
@@ -76,7 +77,7 @@ function loadSeats() {
             const seatElement = document.querySelector(`[data-seat='${booking.seat}']`);
             if (seatElement) {
                 seatElement.classList.add("booked");
-                seatElement.disabled = true;
+                seatElement.disabled = true; // Disable booked seats
             }
         });
     })
