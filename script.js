@@ -1,21 +1,27 @@
 const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwrpR9vZLqGiKBjXoSv8BT_a7AwPoGnHAFji3r-kN7MsSRIDisO6y0zCUVV9ElzZ2JP/exec"; // Replace with your actual URL
 
 document.addEventListener("DOMContentLoaded", function () {
-    const seatContainer = document.getElementById("seat-container");
-    if (seatContainer) {
-        createSeatLayout(); // Create seat layout on page load
-        loadSeats(); // Load booked seats from Google Sheets
-    }
+    // Ensure the user is on the username page first
+    if (!localStorage.getItem("username")) {
+        window.location.href = "index.html"; // Redirect to username input page if not set
+    } else {
+        // Proceed to seat selection if username is saved
+        const seatContainer = document.getElementById("seat-container");
+        if (seatContainer) {
+            createSeatLayout(); // Create seat layout on page load
+            loadSeats(); // Load booked seats from Google Sheets
+        }
 
-    const confirmButton = document.getElementById("confirm-seat");
-    if (confirmButton) {
-        confirmButton.addEventListener("click", function () {
-            confirmSeatSelection();
-        });
+        const confirmButton = document.getElementById("confirm-seat");
+        if (confirmButton) {
+            confirmButton.addEventListener("click", function () {
+                confirmSeatSelection();
+            });
+        }
     }
 });
 
-// Create seat layout with 2 columns, 2 seats per row, 21 rows
+// Create seat layout with 4 columns, 2 seats per column, 21 rows
 function createSeatLayout() {
     const seatContainer = document.getElementById("seat-container");
     if (!seatContainer) return;
@@ -24,7 +30,8 @@ function createSeatLayout() {
         const rowDiv = document.createElement("div");
         rowDiv.classList.add("seat-row");
 
-        for (let col = 1; col <= 2; col++) { // 2 seats per row
+        // Create first cluster (2 seats)
+        for (let col = 1; col <= 2; col++) {
             const seatNumber = `${row}${String.fromCharCode(64 + col)}`; // Ex: 1A, 1B
             const seat = document.createElement("button");
             seat.classList.add("seat");
@@ -37,6 +44,22 @@ function createSeatLayout() {
 
             rowDiv.appendChild(seat);
         }
+
+        // Create second cluster (2 seats)
+        for (let col = 3; col <= 4; col++) {
+            const seatNumber = `${row}${String.fromCharCode(64 + col)}`; // Ex: 1C, 1D
+            const seat = document.createElement("button");
+            seat.classList.add("seat");
+            seat.textContent = seatNumber;
+            seat.dataset.seat = seatNumber;
+
+            seat.addEventListener("click", function () {
+                selectSeat(seatNumber);
+            });
+
+            rowDiv.appendChild(seat);
+        }
+
         seatContainer.appendChild(rowDiv);
     }
 }
