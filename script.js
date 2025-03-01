@@ -1,4 +1,4 @@
-const googleSheetsURL = "https://script.google.com/macros/s/AKfycbw6rCNuHVjP2hKwGVqIpcGdFJut0QvJjBMX-u_8SYtfe8L4B3DE5VZ-_yssIUCzVZldvA/exec";
+const googleSheetsURL = "https://script.google.com/macros/s/AKfycbzB5UpFL8cmhXkhB_0Rnbmw5zAScIBYV6YuCGb4Q9Su8R4yfvPxYmSW7HMr43TZtoBlCw/exec";
 
 // Redirect to seat selection page after username entry
 document.addEventListener("DOMContentLoaded", function() {
