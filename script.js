@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Generate seats dynamically
+// Generate seats
 function generateSeats() {
     const seating = document.getElementById("seating");
     for (let i = 1; i <= 30; i++) {
