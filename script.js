@@ -29,8 +29,8 @@ function generateSeats() {
 function selectSeat(seatNumber) {
     const seats = document.querySelectorAll(".seat");
     seats.forEach(seat => seat.classList.remove("selected"));
-
     const selectedSeat = document.querySelector(`[data-seat='${seatNumber}']`);
+  
     if (!selectedSeat.classList.contains("booked")) {
         selectedSeat.classList.add("selected");
         localStorage.setItem("selectedSeat", seatNumber);
