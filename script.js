@@ -1,6 +1,6 @@
 const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwrpR9vZLqGiKBjXoSv8BT_a7AwPoGnHAFji3r-kN7MsSRIDisO6y0zCUVV9ElzZ2JP/exec";
 
-// Redirects user to seat selection page after entering username
+// Redirect user to seat selection page after entering username
 document.addEventListener("DOMContentLoaded", function () {
     const usernameForm = document.getElementById("usernameForm");
     if (usernameForm) {
