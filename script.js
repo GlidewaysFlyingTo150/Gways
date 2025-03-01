@@ -1,43 +1,37 @@
 const googleSheetsURL = "https://script.google.com/macros/s/AKfycbzB5UpFL8cmhXkhB_0Rnbmw5zAScIBYV6YuCGb4Q9Su8R4yfvPxYmSW7HMr43TZtoBlCw/exec";
 
+// Redirects user to seat selection page after entering username
 document.addEventListener("DOMContentLoaded", function () {
-    const username = localStorage.getItem("username");
-    if (!username) {
-        window.location.href = "index.html"; // Redirect back if no username
-    } else {
-        generateSeats();
-        loadSeats();
+    const usernameForm = document.getElementById("usernameForm");
+    if (usernameForm) {
+        usernameForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const username = document.getElementById("username").value;
+            localStorage.setItem("username", username);
+            window.location.href = 'seats.html';
+        });
     }
+
+    loadSeats(); // Load booked seats when the page loads
 });
 
-// Generate seats
-function generateSeats() {
-    const seating = document.getElementById("seating");
-    for (let i = 1; i <= 30; i++) {
-        const seat = document.createElement("div");
-        seat.classList.add("seat");
-        seat.textContent = i;
-        seat.dataset.seat = i;
-        seat.addEventListener("click", function () {
-            selectSeat(i);
-        });
-        seating.appendChild(seat);
-    }
-}
-
-// Handle seat selection
+// Seat selection function
 function selectSeat(seatNumber) {
     const seats = document.querySelectorAll(".seat");
+    
+    // Remove 'selected' class from all seats
     seats.forEach(seat => seat.classList.remove("selected"));
+
     const selectedSeat = document.querySelector(`[data-seat='${seatNumber}']`);
-  
+    
+    // Only highlight if it's not already booked
     if (!selectedSeat.classList.contains("booked")) {
         selectedSeat.classList.add("selected");
         localStorage.setItem("selectedSeat", seatNumber);
     }
 }
 
-// Handle seat confirmation
+// Confirm seat selection and send data to Google Sheets
 document.getElementById("confirm-seat").addEventListener("click", function () {
     const username = localStorage.getItem("username");
     const selectedSeat = localStorage.getItem("selectedSeat");
@@ -49,19 +43,12 @@ document.getElementById("confirm-seat").addEventListener("click", function () {
 
     fetch(googleSheetsURL, {
         method: "POST",
+        mode: "no-cors", // Prevents CORS errors
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: username, seat: selectedSeat }),
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === "success") {
-            alert(`Seat ${selectedSeat} booked successfully!`);
-            loadSeats(); // Refresh booked seats
-        } else {
-            alert(data.message);
-        }
-    })
-    .catch(error => alert("Error booking seat: " + error));
+    .then(response => console.log("Seat booking request sent"))
+    .catch(error => console.error("Error booking seat:", error));
 });
 
 // Load booked seats from Google Sheets
@@ -73,9 +60,8 @@ function loadSeats() {
             const seatElement = document.querySelector(`[data-seat='${booking.seat}']`);
             if (seatElement) {
                 seatElement.classList.add("booked");
-                seatElement.style.backgroundColor = "red"; // Mark booked seats
             }
         });
     })
-    .catch(error => console.error("Error loading seats: ", error));
+    .catch(error => console.error("Error loading seats:", error));
 }
