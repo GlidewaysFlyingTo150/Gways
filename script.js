@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            fetch("https://script.google.com/macros/s/AKfycbwrpR9vZLqGiKBjXoSv8BT_a7AwPoGnHAFji3r-kN7MsSRIDisO6y0zCUVV9ElzZ2JP/exec", {
+            fetch("https://script.google.com/macros/s/AKfycbyEGxScjlyGHFX5yYGk8X7hYvzEj79yfueQHopAhL7txNzrxJM3A80E8Cq_UOl5ly5h/exec", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username: username, seat: selectedSeat }),
@@ -94,7 +94,7 @@ function selectSeat(event) {
 
 // Load booked seats from Google Sheets
 function loadSeats() {
-    fetch("https://script.google.com/macros/s/AKfycbwrpR9vZLqGiKBjXoSv8BT_a7AwPoGnHAFji3r-kN7MsSRIDisO6y0zCUVV9ElzZ2JP/exec")
+    fetch("https://script.google.com/macros/s/AKfycbyEGxScjlyGHFX5yYGk8X7hYvzEj79yfueQHopAhL7txNzrxJM3A80E8Cq_UOl5ly5h/exec")
     .then(response => response.json())
     .then(data => {
         data.forEach(booking => {
