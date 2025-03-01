@@ -1,4 +1,4 @@
-
+/* General layout */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -10,17 +10,7 @@ h1 {
     margin-top: 20px;
 }
 
-.form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-form {
-    text-align: center;
-}
-
+/* Styling the seat buttons */
 .seat {
     background-color: white;
     border: 1px solid black;
@@ -28,7 +18,7 @@ form {
     margin: 5px;
     cursor: pointer;
     width: 50px;
-    height: 50px; 
+    height: 50px;
 }
 
 .seat.selected {
