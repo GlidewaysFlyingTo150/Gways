@@ -1,16 +1,6 @@
-const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwrpR9vZLqGiKBjXoSv8BT_a7AwPoGnHAFji3r-kN7MsSRIDisO6y0zCUVV9ElzZ2JP/exec"; 
+const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwrpR9vZLqGiKBjXoSv8BT_a7AwPoGnHAFji3r-kN7MsSRIDisO6y0zCUVV9ElzZ2JP/exec"; // Replace with your actual URL
 
 document.addEventListener("DOMContentLoaded", function () {
-    const usernameForm = document.getElementById("usernameForm");
-    if (usernameForm) {
-        usernameForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            const username = document.getElementById("username").value;
-            localStorage.setItem("username", username);
-            window.location.href = "seats.html"; // Redirect to seat selection page
-        });
-    }
-
     const seatContainer = document.getElementById("seat-container");
     if (seatContainer) {
         createSeatLayout(); // Create seat layout on page load
