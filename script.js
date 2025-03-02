@@ -1,26 +1,31 @@
 const googleSheetsURL = "https://script.google.com/macros/s/AKfycbz1LzVB-h6-d26X2DXlibyG9IXTNvAOh12xTJUqdNqh4sc3c0u8EjRs61YwqcQkWKcDmw/exec"; // Replace with your deployed Apps Script URL
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Check if username is stored, otherwise redirect to username page
-    if (!localStorage.getItem("username")) {
-        window.location.href = "index.html";
-    }
-
-    createSeats();
-    loadSeats();
-});
-
-// Handle username submission
-document.getElementById("usernameForm")?.addEventListener("submit", function (event) {
-    event.preventDefault();
-    const username = document.getElementById("username").value.trim();
-    if (username) {
-        localStorage.setItem("username", username);
+    // Redirect to seat selection if username is already stored
+    if (window.location.pathname.includes("index.html") && localStorage.getItem("username")) {
         window.location.href = "seats.html";
     }
+
+    // Handle username form submission
+    document.getElementById("usernameForm")?.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        if (username) {
+            localStorage.setItem("username", username);
+            window.location.href = "seats.html"; // Redirect after entering username
+        } else {
+            alert("Please enter a username.");
+        }
+    });
+
+    // Run seat creation and booking check when on seats.html
+    if (window.location.pathname.includes("seats.html")) {
+        createSeats();
+        loadSeats();
+    }
 });
 
-// Handle seat selection
+// Create seat layout
 function createSeats() {
     const seatContainer = document.getElementById("seatContainer");
     seatContainer.innerHTML = ""; // Clear previous seats
@@ -32,7 +37,7 @@ function createSeats() {
         const rowDiv = document.createElement("div");
         rowDiv.classList.add("seat-row");
 
-        columns.forEach((col, index) => {
+        columns.forEach(col => {
             if (col === "") {
                 const space = document.createElement("div");
                 space.classList.add("seat-space"); // Aisle space
@@ -53,6 +58,8 @@ function createSeats() {
 
 // Handle selecting a seat
 function selectSeat(seat) {
+    if (seat.classList.contains("booked")) return; // Prevent selecting booked seats
+
     document.querySelectorAll(".seat").forEach(s => s.classList.remove("selected"));
     seat.classList.add("selected");
     localStorage.setItem("selectedSeat", seat.dataset.seat);
@@ -91,7 +98,7 @@ function loadSeats() {
     .then(response => response.json())
     .then(data => {
         document.querySelectorAll(".seat").forEach(seat => {
-            seat.classList.remove("booked");
+            seat.classList.remove("booked", "selected");
             seat.style.backgroundColor = "white"; // Reset to default
         });
 
