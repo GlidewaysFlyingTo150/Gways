@@ -1,4 +1,5 @@
-const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwL7b23now6_PV266Y5v5zJfHGRjWlOWAj66xZ6P_MFV5Mj2g7cGvX6QOZ78-B62M-XeQ/exec";
+const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwL7b23now6_PV266Y5v5zJfHGRjWlOWAj66xZ6P_MFV5Mj2g7cGvX6QOZ78-B62M-XeQ/exec"; // Replace with your actual Apps Script URL
+
 document.addEventListener("DOMContentLoaded", function () {
     // Redirect to seat selection if username is already stored
     if (localStorage.getItem("username")) {
