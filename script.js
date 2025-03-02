@@ -1,8 +1,7 @@
-const googleSheetsURL = "https://script.google.com/macros/s/AKfycbz1LzVB-h6-d26X2DXlibyG9IXTNvAOh12xTJUqdNqh4sc3c0u8EjRs61YwqcQkWKcDmw/exec"; // Replace with your deployed Apps Script URL
-
+const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwL7b23now6_PV266Y5v5zJfHGRjWlOWAj66xZ6P_MFV5Mj2g7cGvX6QOZ78-B62M-XeQ/exec";
 document.addEventListener("DOMContentLoaded", function () {
     // Redirect to seat selection if username is already stored
-    if (window.location.pathname.includes("index.html") && localStorage.getItem("username")) {
+    if (localStorage.getItem("username")) {
         window.location.href = "seats.html";
     }
 
@@ -18,8 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Run seat creation and booking check when on seats.html
-    if (window.location.pathname.includes("seats.html")) {
+    // If on the seats page, create seats and load bookings
+    if (document.getElementById("seatContainer")) {
         createSeats();
         loadSeats();
     }
@@ -28,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Create seat layout
 function createSeats() {
     const seatContainer = document.getElementById("seatContainer");
+    if (!seatContainer) return;
     seatContainer.innerHTML = ""; // Clear previous seats
 
     const rows = 21;
@@ -58,8 +58,6 @@ function createSeats() {
 
 // Handle selecting a seat
 function selectSeat(seat) {
-    if (seat.classList.contains("booked")) return; // Prevent selecting booked seats
-
     document.querySelectorAll(".seat").forEach(s => s.classList.remove("selected"));
     seat.classList.add("selected");
     localStorage.setItem("selectedSeat", seat.dataset.seat);
@@ -78,16 +76,12 @@ document.getElementById("confirm-seat")?.addEventListener("click", function () {
     fetch(googleSheetsURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        mode: "no-cors", // Prevents CORS errors but you won't get a response
         body: JSON.stringify({ username: username, seat: selectedSeat }),
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === "success") {
-            alert(`Seat ${selectedSeat} booked successfully!`);
-            loadSeats(); // Refresh seat bookings
-        } else {
-            alert(data.message);
-        }
+    .then(() => {
+        alert(`Seat ${selectedSeat} booked successfully!`);
+        loadSeats(); // Refresh seat bookings
     })
     .catch(error => alert("Error booking seat: " + error));
 });
@@ -98,7 +92,7 @@ function loadSeats() {
     .then(response => response.json())
     .then(data => {
         document.querySelectorAll(".seat").forEach(seat => {
-            seat.classList.remove("booked", "selected");
+            seat.classList.remove("booked");
             seat.style.backgroundColor = "white"; // Reset to default
         });
 
