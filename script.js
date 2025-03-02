@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        fetch("https://script.google.com/macros/s/AKfycbyEGxScjlyGHFX5yYGk8X7hYvzEj79yfueQHopAhL7txNzrxJM3A80E8Cq_UOl5ly5h/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbz1LzVB-h6-d26X2DXlibyG9IXTNvAOh12xTJUqdNqh4sc3c0u8EjRs61YwqcQkWKcDmw/exec", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username: username, seat: selectedSeat }),
