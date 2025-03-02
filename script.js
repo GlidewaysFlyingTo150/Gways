@@ -1,4 +1,4 @@
-const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwL7b23now6_PV266Y5v5zJfHGRjWlOWAj66xZ6P_MFV5Mj2g7cGvX6QOZ78-B62M-XeQ/exec"; // Replace with your actual Apps Script URL
+const googleSheetsURL = "https://script.google.com/macros/s/AKfycbz1LzVB-h6-d26X2DXlibyG9IXTNvAOh12xTJUqdNqh4sc3c0u8EjRs61YwqcQkWKcDmw/exec"; // Replace with your deployed Apps Script URL
 
 document.addEventListener("DOMContentLoaded", function () {
     // Redirect to seat selection if username is already stored
@@ -17,24 +17,25 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Please enter a username.");
         }
     });
-
-    // If on the seats page, create seats and load bookings
-    if (document.getElementById("seatContainer")) {
-        createSeats();
-        loadSeats();
-    }
 });
 
 // Create seat layout
 function createSeats() {
     const seatContainer = document.getElementById("seatContainer");
-    if (!seatContainer) return;
+    if (!seatContainer) {
+        console.error("Seat container not found.");
+        return;
+    }
     seatContainer.innerHTML = ""; // Clear previous seats
 
     const rows = 21;
     const columns = ["A", "B", "", "C", "D"]; // Space for aisle
 
-    for (let row = 1; row <= rows; row++) {
+    console.log("Starting seat creation...");
+
+    // Use a timeout to batch create seats for better performance
+    let rowIndex = 1;
+    const createRow = () => {
         const rowDiv = document.createElement("div");
         rowDiv.classList.add("seat-row");
 
@@ -46,15 +47,24 @@ function createSeats() {
             } else {
                 const seat = document.createElement("button");
                 seat.classList.add("seat");
-                seat.dataset.seat = `${col}${row}`;
-                seat.innerText = `${col}${row}`;
+                seat.dataset.seat = `${col}${rowIndex}`;
+                seat.innerText = `${col}${rowIndex}`;
                 seat.addEventListener("click", () => selectSeat(seat));
                 rowDiv.appendChild(seat);
             }
         });
 
         seatContainer.appendChild(rowDiv);
-    }
+
+        rowIndex++;
+        if (rowIndex <= rows) {
+            setTimeout(createRow, 0); // Delay the next row creation to avoid freezing
+        } else {
+            console.log("Seat creation complete.");
+        }
+    };
+
+    createRow(); // Start the seat creation
 }
 
 // Handle selecting a seat
@@ -77,12 +87,16 @@ document.getElementById("confirm-seat")?.addEventListener("click", function () {
     fetch(googleSheetsURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        mode: "no-cors", // Prevents CORS errors but you won't get a response
         body: JSON.stringify({ username: username, seat: selectedSeat }),
     })
-    .then(() => {
-        alert(`Seat ${selectedSeat} booked successfully!`);
-        loadSeats(); // Refresh seat bookings
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            alert(`Seat ${selectedSeat} booked successfully!`);
+            loadSeats(); // Refresh seat bookings
+        } else {
+            alert(data.message);
+        }
     })
     .catch(error => alert("Error booking seat: " + error));
 });
