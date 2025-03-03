@@ -31,3 +31,13 @@
 .seat-space {
     width: 20px; /* Creates the aisle space */
 }
+
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+}
+.seat {
+    font-family: 'Trebuchet MS', sans-serif;
+}
+button {
+    font-family: 'Trebuchet MS', sans-serif;
+}
