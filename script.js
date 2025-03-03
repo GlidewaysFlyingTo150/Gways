@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Handle seat selection
 function createSeats() {
-    const seatContainer = document.getElementById("seatContainer");
+    const seatContainer = document.getElementById("seat-map");
     if (!seatContainer) return;
 
     seatContainer.innerHTML = ""; // Clear previous seats
