@@ -24,7 +24,7 @@
 }
 
 .seat.selected {
-    background-color: green;
+    background-color: green !ipmortant;
     color: white;
 }
 
