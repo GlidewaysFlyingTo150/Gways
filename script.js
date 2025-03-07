@@ -1,4 +1,4 @@
-const googleSheetsURL = "https://script.google.com/macros/s/AKfycbzm5SYb7B4DYjzHWycp73VZSYaB_nDOSXjAXz-EIKOSQYyjMcor7cgPVScBZaLzXHY_eQ/exec"; // Replace with your deployed Apps Script URL
+const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwXDdjbh5DZWaT_-oZE-sQy8q5aNZfPP4UsN1y8WrhxKPFv6DBBPlB8YlaV5M0Fzvreew/exec"; // Replace with your deployed Apps Script URL
 
 document.addEventListener("DOMContentLoaded", function () {
     const username = localStorage.getItem("username");
@@ -70,8 +70,17 @@ function createSeats() {
 
 // Handle selecting a seat
 function selectSeat(seat) {
-    document.querySelectorAll(".seat").forEach(s => s.classList.remove("selected"));
+    // Remove 'selected' class and reset background for all seats EXCEPT booked ones
+    document.querySelectorAll(".seat").forEach(s => {
+        if (!s.classList.contains("booked")) {
+            s.classList.remove("selected");
+            s.style.backgroundColor = "white"; // Reset unselected seats
+        }
+    });
+
+    // Highlight the newly selected seat
     seat.classList.add("selected");
+    seat.style.backgroundColor = "green"; // Show selection
     localStorage.setItem("selectedSeat", seat.dataset.seat);
 }
 
