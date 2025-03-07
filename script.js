@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!username) {
             window.location.href = "index.html"; // Redirect back if no username
         } else {
-            loadSeats(); // Load seats if user is authenticated
+            createSeats(); // Load seats if user is authenticated
         }
     }
 
@@ -30,11 +30,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// Handle seat selection
+// Generate seat layout
 function createSeats() {
     const seatContainer = document.getElementById("seat-map");
-    if (!seatContainer) return;
-
+    if (!seatContainer) {
+        console.error("Seat container not found!");
+        return;
+    }
     seatContainer.innerHTML = ""; // Clear previous seats
 
     const rows = 21;
@@ -44,7 +46,7 @@ function createSeats() {
         const rowDiv = document.createElement("div");
         rowDiv.classList.add("seat-row");
 
-        columns.forEach((col) => {
+        columns.forEach(col => {
             if (col === "") {
                 const space = document.createElement("div");
                 space.classList.add("seat-space"); // Aisle space
@@ -61,6 +63,9 @@ function createSeats() {
 
         seatContainer.appendChild(rowDiv);
     }
+
+    console.log("Seats created. Now loading booked seats...");
+    loadSeats(); // Ensure this runs AFTER all seats are created
 }
 
 // Handle selecting a seat
@@ -102,6 +107,8 @@ function loadSeats() {
     fetch(googleSheetsURL)
     .then(response => response.json())
     .then(data => {
+        console.log("Fetched seat bookings: ", data);
+
         document.querySelectorAll(".seat").forEach(seat => {
             seat.classList.remove("booked");
             seat.style.backgroundColor = "white"; // Reset to default
@@ -118,3 +125,10 @@ function loadSeats() {
     })
     .catch(error => console.error("Error loading seats: ", error));
 }
+
+// Run seat generation when seats.html loads
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.pathname.includes("seats.html")) {
+        createSeats();
+    }
+});
