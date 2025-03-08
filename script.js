@@ -113,11 +113,19 @@ document.getElementById("confirm-seat")?.addEventListener("click", function () {
 
 // Load booked seats from Google Sheets
 function loadSeats() {
-    fetch(googleSheetsURL)
-    .then(response => response.json())
+    fetch(googleSheetsURL, {
+        method: "GET",
+        mode: "cors", // Allow cross-origin requests
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json();
+    })
     .then(data => {
         console.log("Fetched seat bookings: ", data);
-
+        
         document.querySelectorAll(".seat").forEach(seat => {
             seat.classList.remove("booked");
             seat.style.backgroundColor = "white"; // Reset to default
