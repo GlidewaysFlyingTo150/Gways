@@ -1,4 +1,4 @@
-const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwXDdjbh5DZWaT_-oZE-sQy8q5aNZfPP4UsN1y8WrhxKPFv6DBBPlB8YlaV5M0Fzvreew/exec"; // Replace with your deployed Apps Script URL
+const googleSheetsURL = "https://script.google.com/macros/s/AKfycbw-CFHweK_zjR5idmpeUNfXKI0h1ZjezMfNVMHN6D7i22xoZ5KPXOBFtdGLIkD_7wgKsQ/exec"; // Replace with your deployed Apps Script URL
 
 document.addEventListener("DOMContentLoaded", function () {
     const username = localStorage.getItem("username");
@@ -119,7 +119,7 @@ function loadSeats() {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error("Network response was not ok");
+            throw new Error("Network response was not ok: " + response.status);
         }
         return response.json();
     })
