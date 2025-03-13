@@ -1,4 +1,4 @@
-const googleSheetsURL = "https://script.google.com/macros/s/AKfycbw-CFHweK_zjR5idmpeUNfXKI0h1ZjezMfNVMHN6D7i22xoZ5KPXOBFtdGLIkD_7wgKsQ/exec"; // Replace with your deployed Apps Script URL
+const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwfFw4ih3sHfTdNTDrQ596GgX8jR4jFE76alwZ1RsqBJqiTbW0_OGzxP4sV4ajJwC7o7w/exec"; // Replace with your deployed Apps Script URL
 
 document.addEventListener("DOMContentLoaded", function () {
     const username = localStorage.getItem("username");
@@ -96,7 +96,10 @@ document.getElementById("confirm-seat")?.addEventListener("click", function () {
 
     fetch(googleSheetsURL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify({ username: username, seat: selectedSeat }),
     })
     .then(response => response.json())
