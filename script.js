@@ -95,24 +95,38 @@ document.getElementById("confirm-seat")?.addEventListener("click", function () {
     }
 
     fetch(googleSheetsURL, {
-        method: "POST",
+     method: "GET",
         mode: "cors",
         headers: {
             "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username: username, seat: selectedSeat }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === "success") {
-            alert(`Seat ${selectedSeat} booked successfully!`);
-            loadSeats(); // Refresh seat bookings
-        } else {
-            alert(data.message);
         }
     })
-    .catch(error => alert("Error booking seat: " + error));
-});
+    .then(response => {
+        console.log("Response received:", response);
+        if (!response.ok) {
+            throw new Error("Network response was not ok: " + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Fetched seat bookings: ", data);
+        
+        document.querySelectorAll(".seat").forEach(seat => {
+            seat.classList.remove("booked");
+            seat.style.backgroundColor = "white"; // Reset to default
+        });
+
+        data.forEach(booking => {
+            const seatElement = document.querySelector(`[data-seat='${booking.seat}']`);
+            if (seatElement) {
+                seatElement.classList.add("booked");
+                seatElement.style.backgroundColor = "red"; // Mark as booked
+                seatElement.removeEventListener("click", selectSeat);
+            }
+        });
+    })
+    .catch(error => console.error("Error loading seats:", error));
+}
 
 // Load booked seats from Google Sheets
 function loadSeats() {
