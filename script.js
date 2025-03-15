@@ -1,29 +1,28 @@
-const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwfFw4ih3sHfTdNTDrQ596GgX8jR4jFE76alwZ1RsqBJqiTbW0_OGzxP4sV4ajJwC7o7w/exec"; // Replace with your deployed Apps Script URL
+const googleSheetsURL = "https://script.google.com/macros/s/AKfycbwfs2i9Mp9MiffpPYTbvI_vXZw1fdwfnP40x-kZ20bJpANitmSds7ydX0iPEyNXVcAU3A/exec"; // Replace with your deployed Apps Script URL
 
 document.addEventListener("DOMContentLoaded", function () {
     const username = localStorage.getItem("username");
 
     if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
         if (username && username.trim() !== "") {
-            window.location.href = "seats.html"; // Redirect to seat selection if username exists
+            window.location.href = "seats.html";
         } else {
-            localStorage.removeItem("username"); // Ensure it's cleared if invalid
+            localStorage.removeItem("username");
         }
     } else if (window.location.pathname.includes("seats.html")) {
         if (!username) {
-            window.location.href = "index.html"; // Redirect back if no username
+            window.location.href = "index.html";
         } else {
-            createSeats(); // Load seats if user is authenticated
+            createSeats();
         }
     }
 
-    // Handle username form submission
     document.getElementById("usernameForm")?.addEventListener("submit", function (event) {
         event.preventDefault();
         const username = document.getElementById("username").value.trim();
         if (username) {
             localStorage.setItem("username", username);
-            window.location.href = "seats.html"; // Redirect after entering username
+            window.location.href = "seats.html";
         } else {
             alert("Please enter a username.");
         }
@@ -37,10 +36,10 @@ function createSeats() {
         console.error("Seat container not found!");
         return;
     }
-    seatContainer.innerHTML = ""; // Clear previous seats
+    seatContainer.innerHTML = "";
 
     const rows = 21;
-    const columns = ["A", "B", "", "C", "D"]; // Space for aisle
+    const columns = ["A", "B", "", "C", "D"];
 
     for (let row = 1; row <= rows; row++) {
         const rowDiv = document.createElement("div");
@@ -49,7 +48,7 @@ function createSeats() {
         columns.forEach(col => {
             if (col === "") {
                 const space = document.createElement("div");
-                space.classList.add("seat-space"); // Aisle space
+                space.classList.add("seat-space");
                 rowDiv.appendChild(space);
             } else {
                 const seat = document.createElement("button");
@@ -65,22 +64,20 @@ function createSeats() {
     }
 
     console.log("Seats created. Now loading booked seats...");
-    loadSeats(); // Ensure this runs AFTER all seats are created
+    loadSeats();
 }
 
 // Handle selecting a seat
 function selectSeat(seat) {
-    // Remove 'selected' class and reset background for all seats EXCEPT booked ones
-    document.querySelectorAll(".seat").forEach(s => {
-        if (!s.classList.contains("booked")) {
-            s.classList.remove("selected");
-            s.style.backgroundColor = "white"; // Reset unselected seats
+    document.querySelectorAll(".seat").forEach(seat => {
+        if (!seat.classList.contains("booked")) {
+            seat.classList.remove("selected");
+            seat.style.backgroundColor = "white";
         }
     });
 
-    // Highlight the newly selected seat
     seat.classList.add("selected");
-    seat.style.backgroundColor = "green"; // Show selection
+    seat.style.backgroundColor = "green";
     localStorage.setItem("selectedSeat", seat.dataset.seat);
 }
 
@@ -95,11 +92,29 @@ document.getElementById("confirm-seat")?.addEventListener("click", function () {
     }
 
     fetch(googleSheetsURL, {
-     method: "GET",
+        method: "POST",
         mode: "cors",
-        headers: {
-            "Content-Type": "application/json"
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: username, seat: selectedSeat }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            alert(`Seat ${selectedSeat} booked successfully!`);
+            loadSeats();
+        } else {
+            alert(data.message);
         }
+    })
+    .catch(error => alert("Error booking seat: " + error));
+});
+
+// Load booked seats from Google Sheets
+function loadSeats() {
+    fetch(googleSheetsURL, {
+        method: "GET",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" }
     })
     .then(response => {
         console.log("Response received:", response);
@@ -110,54 +125,22 @@ document.getElementById("confirm-seat")?.addEventListener("click", function () {
     })
     .then(data => {
         console.log("Fetched seat bookings: ", data);
-        
+
         document.querySelectorAll(".seat").forEach(seat => {
             seat.classList.remove("booked");
-            seat.style.backgroundColor = "white"; // Reset to default
+            seat.style.backgroundColor = "white";
         });
 
         data.forEach(booking => {
             const seatElement = document.querySelector(`[data-seat='${booking.seat}']`);
             if (seatElement) {
                 seatElement.classList.add("booked");
-                seatElement.style.backgroundColor = "red"; // Mark as booked
+                seatElement.style.backgroundColor = "red";
                 seatElement.removeEventListener("click", selectSeat);
             }
         });
     })
     .catch(error => console.error("Error loading seats:", error));
-}
-
-// Load booked seats from Google Sheets
-function loadSeats() {
-    fetch(googleSheetsURL, {
-        method: "GET",
-        mode: "cors", // Allow cross-origin requests
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok: " + response.status);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Fetched seat bookings: ", data);
-        
-        document.querySelectorAll(".seat").forEach(seat => {
-            seat.classList.remove("booked");
-            seat.style.backgroundColor = "white"; // Reset to default
-        });
-
-        data.forEach(booking => {
-            const seatElement = document.querySelector(`[data-seat='${booking.seat}']`);
-            if (seatElement) {
-                seatElement.classList.add("booked");
-                seatElement.style.backgroundColor = "red"; // Mark as booked
-                seatElement.removeEventListener("click", selectSeat);
-            }
-        });
-    })
-    .catch(error => console.error("Error loading seats: ", error));
 }
 
 // Run seat generation when seats.html loads
