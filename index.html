@@ -3,56 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Glideways Booking</title>
+  <title>Book a Flight | Glideways</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="booking-header">
-    <a href="Homepage.html" class="back-home">← Back to Glideways Homepage</a>
+    <a href="/Homepage.html" class="logo-link">← Glideways Home</a>
   </header>
 
   <main class="booking-container">
     <div class="tabs">
-      <button class="tab active" data-tab="book">Flights</button>
-      <button class="tab" data-tab="status">Flight Status</button>
+      <button class="tab-btn active" data-tab="book">Flights</button>
+      <button class="tab-btn" data-tab="status">Flight Status</button>
     </div>
 
-    <section id="book" class="tab-content active">
+    <div id="book" class="tab-content active">
       <h2>Book a Flight</h2>
       <form id="booking-form">
-        <label for="flight">Select Flight:</label>
-        <select id="flight" required>
-          <option value="" disabled selected>Select a flight</option>
-          <option value="GL001">GL001 – LAX to JFK</option>
-          <option value="GL002">GL002 – SFO to ORD</option>
-          <option value="GL003">GL003 – MIA to ATL</option>
-        </select>
-
-        <label for="class">Class:</label>
-        <select id="class" required>
-          <option value="" disabled selected>Select class</option>
-          <option value="Economy">Economy</option>
-          <option value="Business">Business</option>
-          <option value="First">First</option>
+        <label for="flight-select">Choose your flight:</label>
+        <select id="flight-select" required>
+          <!-- You can manually add flights here -->
+          <option value="">Select a flight</option>
+          <option value="GL1001">GL1001 - Roblox City to Bloxburg</option>
+          <option value="GL1002">GL1002 - Bloxburg to Brookhaven</option>
+          <option value="GL1003">GL1003 - Roblox City to Adopt Me Island</option>
         </select>
 
         <label for="username">Roblox Username:</label>
-        <input type="text" id="username" required placeholder="Enter your Roblox username" />
+        <input type="text" id="username" readonly placeholder="Login to fetch..." />
 
+        <button type="button" id="roblox-login-btn">Login with Roblox</button>
         <button type="submit">Book Flight</button>
       </form>
-    </section>
+    </div>
 
-    <section id="status" class="tab-content">
+    <div id="status" class="tab-content">
       <h2>Check Flight Status</h2>
-      <p>Feature coming soon...</p>
-    </section>
+      <label for="status-select">Select a flight:</label>
+      <select id="status-select">
+        <option value="">Select a flight</option>
+        <option value="GL1001">GL1001</option>
+        <option value="GL1002">GL1002</option>
+        <option value="GL1003">GL1003</option>
+      </select>
+      <div id="status-result">Status will appear here.</div>
+    </div>
   </main>
-
-  <div id="popup" class="popup hidden">
-    <p>✅ Booking Confirmed!</p>
-    <button onclick="document.getElementById('popup').classList.add('hidden')">Close</button>
-  </div>
 
   <script src="script.js"></script>
 </body>
