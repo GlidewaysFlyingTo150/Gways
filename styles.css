@@ -1,44 +1,87 @@
-.container {
-    text-align: center;
-}
-
-#seat-map {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.seat-row {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 5px;
-}
-
-.seat {
-    width: 40px;
-    height: 40px;
-    background-color: white;
-    border: 1px solid black;
-    cursor: pointer;
-    text-align: center;
-}
-
-.seat.selected {
-    background-color: green !ipmortant;
-    color: white;
-}
-
-.seat-space {
-    width: 20px; /* Creates the aisle space */
-}
-
 body {
-    font-family: 'Trebuchet MS', sans-serif;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url('assets/your-background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #222;
 }
-.seat {
-    font-family: 'Trebuchet MS', sans-serif;
+
+.booking-header {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.2rem;
 }
+
+.logo-link {
+  text-decoration: none;
+  color: #1a73e8;
+}
+
+.booking-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: rgba(255,255,255,0.95);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  background: #eee;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tab-btn.active {
+  background: #1a73e8;
+  color: white;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+input, select, button {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
 button {
-    font-family: 'Trebuchet MS', sans-serif;
-    border-radius: 10px;
+  cursor: pointer;
+  background: #1a73e8;
+  color: white;
+  border: none;
+}
+
+button:hover {
+  background: #155bb5;
+}
+
+#status-result {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: #f0f0f0;
+  border-radius: 5px;
 }
