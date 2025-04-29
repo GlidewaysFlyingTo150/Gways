@@ -1,18 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enter Username</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glideways Booking</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="scripts/tabs.js"></script>
+    <script defer src="scripts/robloxAuth.js"></script>
 </head>
 <body>
-  <h1>Enter Username</h1>
-  <form id="usernameForm">
-    <input type="text" id="username" placeholder="Enter your username" required>
-    <button type="submit">Submit</button>
-  </form>
+    <header class="site-header">
+        <a href="/Homepage.html" class="logo-link">
+            <img src="/images/logo.png" alt="Glideways Logo">
+        </a>
+    </header>
 
-  <script src="script.js"></script>
+    <main class="booking-main" style="background-image: url('/images/booking-bg.jpg');">
+        <div class="booking-container">
+            <div class="tabs">
+                <button class="tab-button active" onclick="showTab('flights')">Flights</button>
+                <button class="tab-button" onclick="showTab('status')">Flight Status</button>
+            </div>
+
+            <div id="flights" class="tab-content active">
+                <form id="flightForm">
+                    <div class="form-group">
+                        <label>Trip Type:</label>
+                        <select name="tripType">
+                            <option value="round">Round Trip</option>
+                            <option value="oneway">One Way</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Departure:</label>
+                        <select name="from">
+                            <option value="NYC">New York</option>
+                            <option value="LAX">Los Angeles</option>
+                            <option value="LHR">London Heathrow</option>
+                            <!-- Add more -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Destination:</label>
+                        <select name="to">
+                            <option value="SFO">San Francisco</option>
+                            <option value="ORD">Chicago</option>
+                            <option value="DXB">Dubai</option>
+                            <!-- Add more -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Departure Date:</label>
+                        <input type="date" name="departureDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Return Date:</label>
+                        <input type="date" name="returnDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Class:</label>
+                        <select name="cabinClass">
+                            <option value="economy">Economy</option>
+                            <option value="business">Business</option>
+                            <option value="first">First Class</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="cta">Book Flight</button>
+                </form>
+            </div>
+
+            <div id="status" class="tab-content">
+                <form id="statusForm">
+                    <div class="form-group">
+                        <label>Flight Number:</label>
+                        <input type="text" name="flightNumber" placeholder="e.g. GL123">
+                    </div>
+                    <button type="submit" class="cta">Check Status</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="userDisplay">Not logged in</div>
+    </main>
 </body>
 </html>
