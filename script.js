@@ -1,22 +1,32 @@
-document.querySelectorAll('.tab-btn').forEach(button => {
-  button.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+const tabButtons = document.querySelectorAll(".tab-btn");
+const tabContents = document.querySelectorAll(".tab-content");
+const tabSlider = document.querySelector(".tab-slider");
 
-    button.classList.add('active');
-    document.getElementById(button.dataset.tab).classList.add('active');
+tabButtons.forEach((btn, i) => {
+  btn.addEventListener("click", () => {
+    // Update active button
+    tabButtons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    // Slide the slider
+    tabSlider.style.transform = `translateX(${i * 100}%)`;
+
+    // Show the right tab
+    tabContents.forEach(tab => tab.classList.remove("active"));
+    document.getElementById(btn.dataset.tab).classList.add("active");
   });
 });
 
-// Simulated Roblox Login (for demo purposes only)
-document.getElementById('roblox-login-btn').addEventListener('click', () => {
-  const username = prompt("Enter your Roblox username:");
-  if (username) {
-    document.getElementById('username').value = username;
-  }
+// Temporary form logging
+document.getElementById("booking-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const flight = document.getElementById("flight").value;
+  const flightClass = document.getElementById("class").value;
+  alert(`Booked flight ${flight} in ${flightClass} class!`);
 });
 
-document.getElementById('booking-form').addEventListener('submit', (e) => {
+document.getElementById("status-form").addEventListener("submit", e => {
   e.preventDefault();
-  alert('Flight booked successfully!');
+  const flight = document.getElementById("flight-status").value;
+  alert(`Status for ${flight} will be fetched.`);
 });
