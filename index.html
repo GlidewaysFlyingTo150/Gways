@@ -3,50 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Book a Flight | Glideways</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Glideways Booking</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
   <header class="booking-header">
-    <a href="/Homepage.html" class="logo-link">← Glideways Home</a>
+    <a href="https://glidewaysflyingto150.github.io/Glideways/index.html" class="home-link">← Glideways Homepage</a>
   </header>
 
   <main class="booking-container">
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="book">Flights</button>
+    <img src="assets/booking-banner.jpg" alt="Flight Banner" class="banner-image"/>
+
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-tab="flights">Flights</button>
       <button class="tab-btn" data-tab="status">Flight Status</button>
+      <div class="tab-slider"></div>
     </div>
 
-    <div id="book" class="tab-content active">
-      <h2>Book a Flight</h2>
-      <form id="booking-form">
-        <label for="flight-select">Choose your flight:</label>
-        <select id="flight-select" required>
-          <!-- You can manually add flights here -->
-          <option value="">Select a flight</option>
-          <option value="GL1001">GL1001 - Roblox City to Bloxburg</option>
-          <option value="GL1002">GL1002 - Bloxburg to Brookhaven</option>
-          <option value="GL1003">GL1003 - Roblox City to Adopt Me Island</option>
-        </select>
+    <div class="tabs">
+      <div class="tab-content active" id="flights">
+        <h2>Book a Flight</h2>
+        <form id="booking-form">
+          <label for="flight">Select Flight:</label>
+          <select id="flight" required>
+            <option value="">-- Choose a Flight --</option>
+            <option value="GW101">GW101 - Robloxia to Bloxburg</option>
+            <option value="GW202">GW202 - Bloxburg to Brookhaven</option>
+          </select>
 
-        <label for="username">Roblox Username:</label>
-        <input type="text" id="username" readonly placeholder="Login to fetch..." />
+          <label for="class">Select Class:</label>
+          <select id="class" required>
+            <option value="">-- Choose a Class --</option>
+            <option value="economy">Economy</option>
+            <option value="business">Business</option>
+            <option value="first">First</option>
+          </select>
 
-        <button type="button" id="roblox-login-btn">Login with Roblox</button>
-        <button type="submit">Book Flight</button>
-      </form>
-    </div>
+          <button type="submit">Book Now</button>
+        </form>
+      </div>
 
-    <div id="status" class="tab-content">
-      <h2>Check Flight Status</h2>
-      <label for="status-select">Select a flight:</label>
-      <select id="status-select">
-        <option value="">Select a flight</option>
-        <option value="GL1001">GL1001</option>
-        <option value="GL1002">GL1002</option>
-        <option value="GL1003">GL1003</option>
-      </select>
-      <div id="status-result">Status will appear here.</div>
+      <div class="tab-content" id="status">
+        <h2>Check Flight Status</h2>
+        <form id="status-form">
+          <label for="flight-status">Select a Flight:</label>
+          <select id="flight-status" required>
+            <option value="">-- Choose a Flight --</option>
+            <option value="GW101">GW101</option>
+            <option value="GW202">GW202</option>
+          </select>
+          <button type="submit">Check Status</button>
+        </form>
+      </div>
     </div>
   </main>
 
