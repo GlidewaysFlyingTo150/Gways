@@ -2,44 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Glideways Booking</title>
-  <link rel="stylesheet" href="booking-style.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <a href="Homepage.html" class="logo-link">
-      <img src="assets/logo.png" alt="Glideways Logo" />
-    </a>
-    <nav class="booking-nav">
-      <button id="flights-tab" class="active-tab">Flights</button>
-      <button id="status-tab">Flight Status</button>
-    </nav>
+  <header class="booking-header">
+    <a href="Homepage.html" class="back-home">← Back to Glideways Homepage</a>
   </header>
 
-  <main class="booking-content">
-    <section id="flights-view">
-      <h1>Select Your Flight</h1>
-      <div id="flights-container" class="flights-container">
-        <!-- Flights will load here -->
-      </div>
+  <main class="booking-container">
+    <div class="tabs">
+      <button class="tab active" data-tab="book">Flights</button>
+      <button class="tab" data-tab="status">Flight Status</button>
+    </div>
+
+    <section id="book" class="tab-content active">
+      <h2>Book a Flight</h2>
+      <form id="booking-form">
+        <label for="flight">Select Flight:</label>
+        <select id="flight" required>
+          <option value="" disabled selected>Select a flight</option>
+          <option value="GL001">GL001 – LAX to JFK</option>
+          <option value="GL002">GL002 – SFO to ORD</option>
+          <option value="GL003">GL003 – MIA to ATL</option>
+        </select>
+
+        <label for="class">Class:</label>
+        <select id="class" required>
+          <option value="" disabled selected>Select class</option>
+          <option value="Economy">Economy</option>
+          <option value="Business">Business</option>
+          <option value="First">First</option>
+        </select>
+
+        <label for="username">Roblox Username:</label>
+        <input type="text" id="username" required placeholder="Enter your Roblox username" />
+
+        <button type="submit">Book Flight</button>
+      </form>
     </section>
 
-    <section id="status-view" style="display: none;">
-      <h1>Flight Status Checker</h1>
-      <p>Coming soon!</p>
-    </section>
-
-    <section class="booking-controls">
-      <div id="login-area">
-        <button id="login-btn">Login with Roblox</button>
-        <p id="username-display" style="display: none;"></p>
-      </div>
-
-      <button id="book-btn" disabled>Book Flight</button>
+    <section id="status" class="tab-content">
+      <h2>Check Flight Status</h2>
+      <p>Feature coming soon...</p>
     </section>
   </main>
 
-  <script src="booking-script.js"></script>
+  <div id="popup" class="popup hidden">
+    <p>✅ Booking Confirmed!</p>
+    <button onclick="document.getElementById('popup').classList.add('hidden')">Close</button>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
