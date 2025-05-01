@@ -2,6 +2,16 @@ const tabButtons = document.querySelectorAll(".tab-btn");
 const tabContents = document.querySelectorAll(".tab-content");
 const tabSlider = document.querySelector(".tab-slider");
 
+document.addEventListener('DOMContentLoaded', () => {
+  const ownsFC = localStorage.getItem('ownsFC') === 'true';
+  const fcOption = document.getElementById('fc-option'); 
+
+  if (!ownsFC && fcOption) {
+    fcOption.style.display = 'none';
+  }
+});
+
+
 tabButtons.forEach((btn, i) => {
   btn.addEventListener("click", () => {
     // Update active button
@@ -50,10 +60,11 @@ async function login() {
 
     const data = await res.json();
 
-    if (data.success && data.ownsPass) {
-      localStorage.setItem('robloxUsername', username);
-      window.location.href = '/booking';
-    } else {
+   if (data.success) {
+  localStorage.setItem('robloxUsername', username);
+  localStorage.setItem('ownsFC', data.ownsPass ? 'true' : 'false');
+  window.location.href = '/';
+}   } else {
       errorDisplay.textContent = 'You do not own the First Class Gamepass.';
     }
   } catch (err) {
