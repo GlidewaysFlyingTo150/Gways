@@ -1,46 +1,4 @@
-const tabButtons = document.querySelectorAll(".tab-btn");
-const tabContents = document.querySelectorAll(".tab-content");
-const tabSlider = document.querySelector(".tab-slider");
-
-document.addEventListener('DOMContentLoaded', () => {
-  const ownsFC = localStorage.getItem('ownsFC') === 'true';
-  const fcOption = document.getElementById('fc-option'); 
-
-  if (!ownsFC && fcOption) {
-    fcOption.style.display = 'none';
-  }
-});
-
-
-tabButtons.forEach((btn, i) => {
-  btn.addEventListener("click", () => {
-    // Update active button
-    tabButtons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    // Slide the slider
-    tabSlider.style.transform = `translateX(${i * 100}%)`;
-
-    // Show the right tab
-    tabContents.forEach(tab => tab.classList.remove("active"));
-    document.getElementById(btn.dataset.tab).classList.add("active");
-  });
-});
-
-// Temporary form logging
-document.getElementById("booking-form").addEventListener("submit", e => {
-  e.preventDefault();
-  const flight = document.getElementById("flight").value;
-  const flightClass = document.getElementById("class").value;
-  alert(`Booked flight ${flight} in ${flightClass} class!`);
-});
-
-document.getElementById("status-form").addEventListener("submit", e => {
-  e.preventDefault();
-  const flight = document.getElementById("flight-status").value;
-  alert(`Status for ${flight} will be fetched.`);
-});
-
+// Login flow
 async function login() {
   const username = document.getElementById('username').value.trim();
   const errorDisplay = document.getElementById('login-error');
@@ -60,11 +18,11 @@ async function login() {
 
     const data = await res.json();
 
-   if (data.success) {
-  localStorage.setItem('robloxUsername', username);
-  localStorage.setItem('ownsFC', data.ownsPass ? 'true' : 'false');
-  window.location.href = '/';
-}   } else {
+    if (data.success) {
+      localStorage.setItem('robloxUsername', username);
+      localStorage.setItem('ownsFirstClass', data.ownsPass ? 'true' : 'false');
+      window.location.href = '/';
+    } else {
       errorDisplay.textContent = 'You do not own the First Class Gamepass.';
     }
   } catch (err) {
@@ -72,3 +30,19 @@ async function login() {
     errorDisplay.textContent = 'An error occurred. Please try again later.';
   }
 }
+
+// Homepage logic: Hide FC if user doesn't own it
+document.addEventListener('DOMContentLoaded', () => {
+  const fcOption = document.getElementById('fc-option');
+  const ownsFirstClass = localStorage.getItem('ownsFirstClass');
+
+  if (fcOption && ownsFirstClass !== 'true') {
+    fcOption.style.display = 'none';
+  }
+
+  const usernameDisplay = document.getElementById('username-display');
+  const storedUsername = localStorage.getItem('robloxUsername');
+  if (usernameDisplay && storedUsername) {
+    usernameDisplay.textContent = `Logged in as ${storedUsername}`;
+  }
+});
