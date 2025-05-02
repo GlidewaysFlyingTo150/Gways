@@ -2,20 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Glideways</title>
-    <link rel="icon" type="image/png" href="assets//Logo.png">
-  <link rel="stylesheet" href="styles.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glideways Booking</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
-    <h1>Welcome to Glideways</h1>
-    <p id="welcome-username"></p>
+    <a href="Homepage.html" class="logo">Glideways</a>
   </header>
 
-  <div class="booking-options">
-    <button class="class-button" id="economy">Economy Class</button>
-    <button class="class-button" id="first-class">First Class</button> 
+  <div class="hero-image"></div>
+
+  <div class="tab-buttons">
+    <button class="tab-button active" data-tab="flights">Flights</button>
+    <button class="tab-button" data-tab="status">Flight Status</button>
+  </div>
+
+  <div class="tab-container">
+    <div class="tab-panel active" id="flights">
+      <h2>Book a Flight</h2>
+      <p id="welcome"></p>
+      <form>
+        <label>Departure:
+          <select><option value="">Select departure</option></select>
+        </label>
+        <label>Destination:
+          <select><option value="">Select destination</option></select>
+        </label>
+        <label>Class:
+          <select id="class-options">
+            <option value="economy">Economy</option>
+            <option value="first">First Class</option>
+          </select>
+        </label>
+        <button type="submit">Book Flight</button>
+      </form>
+    </div>
+
+    <div class="tab-panel" id="status">
+      <h2>Check Flight Status</h2>
+      <form>
+        <label>Flight Number:
+          <input type="text" placeholder="Enter flight number" />
+        </label>
+        <button type="submit">Check Status</button>
+      </form>
+    </div>
   </div>
 
   <script src="script.js"></script>
