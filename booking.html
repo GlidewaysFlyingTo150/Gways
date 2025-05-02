@@ -8,56 +8,15 @@
   <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-  <header class="booking-header">
-    <a href="https://glidewaysflyingto150.github.io/Glideways/index.html" class="home-link">← Glideways Homepage</a>
+  <header>
+    <h1>Welcome to Glideways</h1>
+    <p id="welcome-username"></p>
   </header>
 
-  <main class="booking-container">
-    <img src="assets/Banner.webp" alt="Flight Banner" class="banner-image"/>
-
-    <div class="tab-buttons">
-      <button class="tab-btn active" data-tab="flights">Flights</button>
-      <button class="tab-btn" data-tab="status">Flight Status</button>
-      <div class="tab-slider"></div>
-    </div>
-
-    <div class="tabs">
-      <div class="tab-content active" id="flights">
-        <h2>Book a Flight</h2>
-        <form id="booking-form">
-          <label for="flight">Select Flight:</label>
-          <select id="flight" required>
-            <option value="">-- Choose a Flight --</option>
-            <option value="GW101">GW101 - Robloxia to Bloxburg</option>
-            <option value="GW202">GW202 - Bloxburg to Brookhaven</option>
-          </select>
-
-          <label for="class">Select Class:</label>
-          <select id="class" required>
-            <option value="">-- Choose a Class --</option>
-            <option value="economy">Economy</option>
-            <option value="business">Business</option>
-            <option value="first">First</option>
-          </select>
-
-          <button type="submit">Book Now</button>
-        </form>
-      </div>
-
-      <div class="tab-content" id="status">
-        <h2>Check Flight Status</h2>
-        <form id="status-form">
-          <label for="flight-status">Select a Flight:</label>
-          <select id="flight-status" required>
-            <option value="">-- Choose a Flight --</option>
-            <option value="GW101">GW101</option>
-            <option value="GW202">GW202</option>
-          </select>
-          <button type="submit">Check Status</button>
-        </form>
-      </div>
-    </div>
-  </main>
+  <div class="booking-options">
+    <button class="class-button" id="economy">Economy Class</button>
+    <button class="class-button" id="first-class">First Class</button> 
+  </div>
 
   <script src="script.js"></script>
 </body>
