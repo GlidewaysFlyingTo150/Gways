@@ -11,42 +11,53 @@
     <a href="Homepage.html" class="logo">Glideways</a>
   </header>
 
-  <div class="hero-image"></div>
-
-  <div class="tab-buttons">
-    <button class="tab-button active" data-tab="flights">Flights</button>
-    <button class="tab-button" data-tab="status">Flight Status</button>
+  <div class="hero-banner">
+    <img src="/images/booking-banner.jpg" alt="Glideways Banner" />
   </div>
 
-  <div class="tab-container">
-    <div class="tab-panel active" id="flights">
-      <h2>Book a Flight</h2>
-      <p id="welcome"></p>
-      <form>
-        <label>Departure:
-          <select><option value="">Select departure</option></select>
-        </label>
-        <label>Destination:
-          <select><option value="">Select destination</option></select>
-        </label>
-        <label>Class:
+  <div class="main-container">
+    <div class="tabs">
+      <button class="tab-button active" data-tab="flights">Flights</button>
+      <button class="tab-button" data-tab="status">Flight Status</button>
+    </div>
+
+    <div class="tab-content">
+      <div id="flights" class="tab-panel active">
+        <h2>Book a Flight</h2>
+        <p id="welcome"></p>
+        <form>
+          <label for="departure">Departure:</label>
+          <select id="departure">
+            <option value="">Select...</option>
+            <option value="London">London</option>
+            <option value="New York">New York</option>
+          </select>
+
+          <label for="destination">Destination:</label>
+          <select id="destination">
+            <option value="">Select...</option>
+            <option value="Tokyo">Tokyo</option>
+            <option value="Paris">Paris</option>
+          </select>
+
+          <label for="class-options">Class:</label>
           <select id="class-options">
             <option value="economy">Economy</option>
             <option value="first">First Class</option>
           </select>
-        </label>
-        <button type="submit">Book Flight</button>
-      </form>
-    </div>
 
-    <div class="tab-panel" id="status">
-      <h2>Check Flight Status</h2>
-      <form>
-        <label>Flight Number:
-          <input type="text" placeholder="Enter flight number" />
-        </label>
-        <button type="submit">Check Status</button>
-      </form>
+          <button type="submit">Book Now</button>
+        </form>
+      </div>
+
+      <div id="status" class="tab-panel">
+        <h2>Check Flight Status</h2>
+        <form>
+          <label for="flight-number">Flight Number:</label>
+          <input type="text" id="flight-number" placeholder="Enter flight number" />
+          <button type="submit">Check</button>
+        </form>
+      </div>
     </div>
   </div>
 
