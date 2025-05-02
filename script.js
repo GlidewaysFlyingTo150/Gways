@@ -1,4 +1,3 @@
-// Login flow
 async function login() {
   const username = document.getElementById('username').value.trim();
   const errorDisplay = document.getElementById('login-error');
@@ -20,8 +19,8 @@ async function login() {
 
     if (data.success) {
       localStorage.setItem('robloxUsername', username);
-      localStorage.setItem('ownsFirstClass', data.ownsPass ? 'true' : 'false');
-      window.location.href = '/';
+      localStorage.setItem('ownsPass', data.ownsPass);
+      window.location.href = '/booking';
     } else {
       errorDisplay.textContent = 'You do not own the First Class Gamepass.';
     }
@@ -31,18 +30,19 @@ async function login() {
   }
 }
 
-// Homepage logic: Hide FC if user doesn't own it
-document.addEventListener('DOMContentLoaded', () => {
-  const fcOption = document.getElementById('fc-option');
-  const ownsFirstClass = localStorage.getItem('ownsFirstClass');
+// Booking page logic
+window.addEventListener('DOMContentLoaded', () => {
+  const usernameDisplay = document.getElementById('welcome-username');
+  const firstClassButton = document.getElementById('first-class');
 
-  if (fcOption && ownsFirstClass !== 'true') {
-    fcOption.style.display = 'none';
+  const username = localStorage.getItem('robloxUsername');
+  const ownsPass = localStorage.getItem('ownsPass') === 'true';
+
+  if (usernameDisplay && username) {
+    usernameDisplay.textContent = `Welcome, ${username}!`;
   }
 
-  const usernameDisplay = document.getElementById('username-display');
-  const storedUsername = localStorage.getItem('robloxUsername');
-  if (usernameDisplay && storedUsername) {
-    usernameDisplay.textContent = `Logged in as ${storedUsername}`;
+  if (firstClassButton && !ownsPass) {
+    firstClassButton.style.display = 'none';
   }
 });
