@@ -8,58 +8,53 @@
 </head>
 <body>
   <header>
-    <a href="Homepage.html" class="logo">Glideways</a>
+    <a href="https://glideways.github.io/Homepage.html" class="logo">Glideways</a>
   </header>
 
-  <div class="hero-banner">
-    <img src="/images/booking-banner.jpg" alt="Glideways Banner" />
-  </div>
+  <main>
+    <section class="hero">
+      <img src="images/banner.jpg" alt="Airline Banner" class="hero-image" />
+    </section>
 
-  <div class="main-container">
-    <div class="tabs">
-      <button class="tab-button active" data-tab="flights">Flights</button>
-      <button class="tab-button" data-tab="status">Flight Status</button>
-    </div>
-
-    <div class="tab-content">
-      <div id="flights" class="tab-panel active">
-        <h2>Book a Flight</h2>
-        <p id="welcome"></p>
-        <form>
-          <label for="departure">Departure:</label>
-          <select id="departure">
-            <option value="">Select...</option>
-            <option value="London">London</option>
-            <option value="New York">New York</option>
-          </select>
-
-          <label for="destination">Destination:</label>
-          <select id="destination">
-            <option value="">Select...</option>
-            <option value="Tokyo">Tokyo</option>
-            <option value="Paris">Paris</option>
-          </select>
-
-          <label for="class-options">Class:</label>
-          <select id="class-options">
-            <option value="economy">Economy</option>
-            <option value="first">First Class</option>
-          </select>
-
-          <button type="submit">Book Now</button>
-        </form>
+    <section class="tabs">
+      <div class="tab-header">
+        <button class="tab-button active" onclick="switchTab('flights')">Flights</button>
+        <button class="tab-button" onclick="switchTab('status')">Flight Status</button>
       </div>
 
-      <div id="status" class="tab-panel">
-        <h2>Check Flight Status</h2>
-        <form>
-          <label for="flight-number">Flight Number:</label>
-          <input type="text" id="flight-number" placeholder="Enter flight number" />
-          <button type="submit">Check</button>
-        </form>
+      <div class="tab-content">
+        <div id="flights" class="tab-panel active">
+          <h2>Book Your Flight</h2>
+          <form id="flightForm">
+            <label for="destination">Select Destination:</label>
+            <select id="destination">
+              <option value="JFK">New York (JFK)</option>
+              <option value="LAX">Los Angeles (LAX)</option>
+              <option value="ORD">Chicago (ORD)</option>
+            </select>
+
+            <label for="class">Class:</label>
+            <select id="class">
+              <option value="economy">Economy</option>
+              <option value="first">First Class</option>
+            </select>
+
+            <button type="submit">Book Now</button>
+          </form>
+        </div>
+
+        <div id="status" class="tab-panel">
+          <h2>Check Flight Status</h2>
+          <form id="statusForm">
+            <label for="flightNumber">Flight Number:</label>
+            <input type="text" id="flightNumber" />
+            <button type="submit">Check Status</button>
+          </form>
+          <div id="statusResult"></div>
+        </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>
