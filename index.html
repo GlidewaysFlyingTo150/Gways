@@ -7,12 +7,20 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="login-container">
-    <h1>Glideways Login</h1>
-    <input type="text" id="username" placeholder="Enter your Roblox username" />
-    <button onclick="login()">Login</button>
-    <p id="login-error" class="error-text"></p>
-  </div>
+  <header class="booking-header">
+    <h1>Welcome to Glideways</h1>
+  </header>
+
+  <main class="booking-container">
+    <img src="assets/booking-banner.jpg" alt="Flight Banner" class="banner-image" />
+    <h2>Log in to Continue</h2>
+    <form id="login-form">
+      <label for="username">Roblox Username:</label>
+      <input type="text" id="username" required />
+      <button type="submit">Log In</button>
+    </form>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>
