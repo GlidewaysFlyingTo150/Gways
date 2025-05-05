@@ -1,31 +1,17 @@
-// Booking page logic
-document.addEventListener('DOMContentLoaded', () => {
-  const tabs = document.querySelectorAll('.tab-button');
-  const panels = document.querySelectorAll('.tab-panel');
-  const classSelect = document.getElementById('class-options');
-  const username = localStorage.getItem('robloxUsername');
-  const ownsPass = localStorage.getItem('ownsFirstClass') === 'true';
+// Redirect back to login if no user is stored
+const storedUser = localStorage.getItem('glidewaysUsername');
+if (!storedUser && window.location.pathname.includes("booking.html")) {
+  window.location.href = "index.html";
+}
 
-  // Greet the user
-  if (username) {
-    const welcome = document.getElementById('welcome');
-    welcome.textContent = `Welcome, ${username}!`;
-  }
+// Tabs switching logic
+function showTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+  document.getElementById(tabName).classList.remove('hidden');
 
-  // Hide First Class if they don't own it
-  if (!ownsPass && classSelect) {
-    const fcOption = classSelect.querySelector('option[value="first"]');
-    if (fcOption) fcOption.remove();
-  }
-
-  // Tab switching
-  tabs.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      panels.forEach(p => p.classList.remove('active'));
-
-      btn.classList.add('active');
-      document.getElementById(btn.dataset.tab).classList.add('active');
-    });
-  });
-});
+  document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+  const activeTab = Array.from(document.querySelectorAll('.tab')).find(btn =>
+    btn.textContent.toLowerCase().includes(tabName)
+  );
+  if (activeTab) activeTab.classList.add('active');
+}
