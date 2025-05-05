@@ -1,93 +1,158 @@
+/* GENERAL RESET */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f4fff6;
   margin: 0;
-  color: #2e7d32;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f4f4;
 }
 
-header {
-  background-color: #1b5e20;
-  padding: 10px 20px;
+/* HEADER */
+.main-header {
+  background: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.logo {
-  color: white;
-  font-size: 24px;
+.main-header img {
+  height: 40px;
+}
+
+.main-header nav a {
   text-decoration: none;
+  color: #2ecc71;
   font-weight: bold;
 }
 
-.hero-banner img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-}
-
-.main-container {
-  max-width: 700px;
-  margin: 20px auto;
-  padding: 0 20px;
-}
-
-.tabs {
+/* HERO BACKGROUND */
+.login-hero, .booking-hero {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
-  margin-bottom: 15px;
+  align-items: center;
 }
 
-.tab-button {
-  padding: 10px 20px;
-  margin: 0 5px;
-  background-color: #66bb6a;
-  color: white;
+/* LOGIN CARD */
+.login-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.login-logo {
+  height: 50px;
+  margin-bottom: 20px;
+}
+
+.login-card h2 {
+  margin-bottom: 10px;
+  color: #2ecc71;
+}
+
+.login-card p {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 12px;
+  background: #2ecc71;
+  color: #fff;
   border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-card button:hover {
+  background: #27ae60;
+}
+
+/* BOOKING BOX */
+.booking-box {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.booking-logo {
+  height: 50px;
+  margin-bottom: 20px;
+}
+
+.tab-selector {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  border: none;
+  background: #eee;
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
+  color: #333;
 }
 
-.tab-button.active {
-  background-color: #2e7d32;
+.tab.active {
+  background: #2ecc71;
+  color: #fff;
 }
 
 .tab-content {
-  position: relative;
-}
-
-.tab-panel {
   display: none;
-  animation: fade-in 0.4s ease-out forwards;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.tab-panel.active {
+.tab-content:not(.hidden) {
   display: block;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
-form select, form input, form button {
+form select, form input[type="text"], form input[type="date"] {
   padding: 10px;
-  border: 1px solid #ccc;
   border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
 form button {
-  background-color: #2e7d32;
+  padding: 12px;
+  background: #2ecc71;
   color: white;
   border: none;
-  font-weight: bold;
+  border-radius: 6px;
+  font-size: 1rem;
   cursor: pointer;
 }
 
-@keyframes fade-in {
-  from { opacity: 0; transform: translateX(20px); }
-  to { opacity: 1; transform: translateX(0); }
+form button:hover {
+  background: #27ae60;
 }
