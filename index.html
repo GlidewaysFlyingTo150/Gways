@@ -7,20 +7,29 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="booking-header">
-    <h1>Welcome to Glideways</h1>
-  </header>
+  <div class="login-hero" style="background-image: url('assets/booking-bg.jpg');">
+    <div class="login-card">
+      <img src="assets/logo.png" class="login-logo" alt="Glideways Logo">
+      <h2>Welcome aboard Glideways</h2>
+      <p>Please enter your Roblox username to continue</p>
+      
+      <form id="login-form">
+        <input type="text" id="username" placeholder="Roblox Username or ID" required />
+        <button type="submit">Continue</button>
+      </form>
+    </div>
+  </div>
 
-  <main class="booking-container">
-    <img src="assets/booking-banner.jpg" alt="Flight Banner" class="banner-image" />
-    <h2>Log in to Continue</h2>
-    <form id="login-form">
-      <label for="username">Roblox Username:</label>
-      <input type="text" id="username" required />
-      <button type="submit">Log In</button>
-    </form>
-  </main>
-
-  <script src="script.js"></script>
+  <script>
+    const form = document.getElementById('login-form');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      if (username.length > 0) {
+        localStorage.setItem('glidewaysUsername', username);
+        window.location.href = "booking.html";
+      }
+    });
+  </script>
 </body>
 </html>
