@@ -2,59 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Glideways Booking</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <a href="https://glideways.github.io/Homepage.html" class="logo">Glideways</a>
+  <header class="main-header">
+    <img src="assets/logo.png" alt="Glideways Logo" />
+    <nav>
+      <a href="index.html">Logout</a>
+    </nav>
   </header>
 
-  <main>
-    <section class="hero">
-      <img src="images/banner.jpg" alt="Airline Banner" class="hero-image" />
-    </section>
-
-    <section class="tabs">
-      <div class="tab-header">
-        <button class="tab-button active" onclick="switchTab('flights')">Flights</button>
-        <button class="tab-button" onclick="switchTab('status')">Flight Status</button>
+  <div class="booking-hero" style="background-image: url('assets/booking-bg.jpg');">
+    <div class="booking-box">
+      <img src="assets/logo.png" class="booking-logo" alt="Glideways Logo">
+      <div class="tab-selector">
+        <button class="tab active" onclick="showTab('flights')">Flights</button>
+        <button class="tab" onclick="showTab('status')">Flight Status</button>
       </div>
 
-      <div class="tab-content">
-        <div id="flights" class="tab-panel active">
-          <h2>Book Your Flight</h2>
-          <form id="flightForm">
-            <label for="destination">Select Destination:</label>
-            <select id="destination">
-              <option value="JFK">New York (JFK)</option>
-              <option value="LAX">Los Angeles (LAX)</option>
-              <option value="ORD">Chicago (ORD)</option>
-            </select>
-
-            <label for="class">Class:</label>
-            <select id="class">
-              <option value="economy">Economy</option>
-              <option value="first">First Class</option>
-            </select>
-
-            <button type="submit">Book Now</button>
-          </form>
-        </div>
-
-        <div id="status" class="tab-panel">
-          <h2>Check Flight Status</h2>
-          <form id="statusForm">
-            <label for="flightNumber">Flight Number:</label>
-            <input type="text" id="flightNumber" />
-            <button type="submit">Check Status</button>
-          </form>
-          <div id="statusResult"></div>
-        </div>
+      <div id="flights" class="tab-content">
+        <form id="flight-form">
+          <select required>
+            <option value="">From</option>
+            <option value="Manila">Manila</option>
+            <option value="Tokyo">Tokyo</option>
+          </select>
+          <select required>
+            <option value="">To</option>
+            <option value="Los Angeles">Los Angeles</option>
+            <option value="Singapore">Singapore</option>
+          </select>
+          <select>
+            <option>Economy</option>
+            <option>Business</option>
+            <option>First Class</option>
+          </select>
+          <input type="date" required />
+          <button type="submit">Search Flights</button>
+        </form>
       </div>
-    </section>
-  </main>
+
+      <div id="status" class="tab-content hidden">
+        <p>Enter flight number:</p>
+        <input type="text" placeholder="GL123" />
+        <button>Check Status</button>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
