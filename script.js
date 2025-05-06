@@ -24,17 +24,18 @@ document.getElementById("booking-form").addEventListener("submit", e => {
 });
 
 const flightStatuses = {
-  GW101: "On Time - Departure at 2:00 PM",
-  GW202: "Delayed - Estimated departure at 4:30 PM"
+  GW101: "🟢 On Time - Departure at 2:00 PM",
+  GW202: "🔴 Delayed - Estimated departure at 4:30 PM"
 };
 
-document.getElementById("status-form").addEventListener("submit", e => {
-  e.preventDefault();
-  const flight = document.getElementById("flight-status").value;
+const flightStatusSelect = document.getElementById("flight-status");
+const statusResult = document.getElementById("status-result");
 
-  if (flightStatuses[flight]) {
-    alert(`Status for ${flight}: ${flightStatuses[flight]}`);
+flightStatusSelect.addEventListener("change", () => {
+  const selectedFlight = flightStatusSelect.value;
+  if (flightStatuses[selectedFlight]) {
+    statusResult.textContent = `Status: ${flightStatuses[selectedFlight]}`;
   } else {
-    alert(`Status for ${flight} is currently unavailable.`);
+    statusResult.textContent = "Status information is currently unavailable.";
   }
 });
