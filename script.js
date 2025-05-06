@@ -21,11 +21,20 @@ document.getElementById("booking-form").addEventListener("submit", e => {
   const flightClass = document.getElementById("class").value;
   alert(`${username} booked flight ${flight} in ${flightClass} class!`);
 
-  // You can store bookings in localStorage for now or add backend later
 });
+
+const flightStatuses = {
+  GW101: "On Time - Departure at 2:00 PM",
+  GW202: "Delayed - Estimated departure at 4:30 PM"
+};
 
 document.getElementById("status-form").addEventListener("submit", e => {
   e.preventDefault();
   const flight = document.getElementById("flight-status").value;
-  alert(`Status for ${flight} will be fetched.`);
+
+  if (flightStatuses[flight]) {
+    alert(`Status for ${flight}: ${flightStatuses[flight]}`);
+  } else {
+    alert(`Status for ${flight} is currently unavailable.`);
+  }
 });
