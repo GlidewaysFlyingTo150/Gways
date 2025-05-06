@@ -118,3 +118,9 @@ button {
 button:hover {
   background: var(--green-dark);
 }
+
+.status-text {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: var(--green-dark);
+}
