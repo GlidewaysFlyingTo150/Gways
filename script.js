@@ -23,13 +23,15 @@ document.getElementById("booking-form").addEventListener("submit", e => {
 
 });
 
-const flightStatuses = {
-  GW101: "🟢 On Time - Departure at 2:00 PM",
-  GW202: "🔴 Delayed - Estimated departure at 4:30 PM"
-};
-
 const flightStatusSelect = document.getElementById("flight-status");
 const statusResult = document.getElementById("status-result");
+
+// Hardcoded statuses — update these directly in the script
+const flightStatuses = {
+  GW101: "🟢 On Time - Departure at 2:00 PM",
+  GW202: "🔴 Delayed - Estimated departure at 4:30 PM",
+  GW303: "🟡 Boarding Soon - Gate 4A",
+};
 
 flightStatusSelect.addEventListener("change", () => {
   const selectedFlight = flightStatusSelect.value;
