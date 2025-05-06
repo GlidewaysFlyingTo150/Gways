@@ -4,53 +4,58 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Glideways Booking</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-  <header class="main-header">
-    <img src="assets/logo.png" alt="Glideways Logo" />
-    <nav>
-      <a href="index.html">Logout</a>
-    </nav>
+  <header class="booking-header">
+    <a href="Homepage.html" class="home-link">← Glideways Homepage</a>
   </header>
 
-  <div class="booking-hero" style="background-image: url('assets/Booking.webp');">
-    <div class="booking-box">
-      <img src="assets/logo.png" class="booking-logo" alt="Glideways Logo">
-      <div class="tab-selector">
-        <button class="tab active" onclick="showTab('flights')">Flights</button>
-        <button class="tab" onclick="showTab('status')">Flight Status</button>
-      </div>
+  <main class="booking-container">
+    <img src="assets/Booking.webp" alt="Flight Banner" class="banner-image"/>
 
-      <div id="flights" class="tab-content">
-        <form id="flight-form">
-          <select required>
-            <option value="">From</option>
-            <option value="Manila">Manila</option>
-            <option value="Tokyo">Tokyo</option>
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-tab="flights">Flights</button>
+      <button class="tab-btn" data-tab="status">Flight Status</button>
+      <div class="tab-slider"></div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab-content active" id="flights">
+        <h2>Book a Flight</h2>
+        <form id="booking-form">
+          <label for="flight">Select Flight:</label>
+          <select id="flight" required>
+            <option value="">-- Choose a Flight --</option>
+            <option value="GW101">GW101 - Robloxia to Bloxburg</option>
+            <option value="GW202">GW202 - Bloxburg to Brookhaven</option>
           </select>
-          <select required>
-            <option value="">To</option>
-            <option value="Los Angeles">Los Angeles</option>
-            <option value="Singapore">Singapore</option>
+
+          <label for="class">Select Class:</label>
+          <select id="class" required>
+            <option value="">-- Choose a Class --</option>
+            <option value="economy">Economy</option>
+            <!-- First Class is added by script if gamepass is owned -->
           </select>
-          <select>
-            <option>Economy</option>
-            <option>Business</option>
-            <option>First Class</option>
-          </select>
-          <input type="date" required />
-          <button type="submit">Search Flights</button>
+
+          <button type="submit">Book Now</button>
         </form>
       </div>
 
-      <div id="status" class="tab-content hidden">
-        <p>Enter flight number:</p>
-        <input type="text" placeholder="GL123" />
-        <button>Check Status</button>
+      <div class="tab-content" id="status">
+        <h2>Check Flight Status</h2>
+        <form id="status-form">
+          <label for="flight-status">Select a Flight:</label>
+          <select id="flight-status" required>
+            <option value="">-- Choose a Flight --</option>
+            <option value="GW101">GW101</option>
+            <option value="GW202">GW202</option>
+          </select>
+          <button type="submit">Check Status</button>
+        </form>
       </div>
     </div>
-  </div>
+  </main>
 
   <script src="script.js"></script>
 </body>
