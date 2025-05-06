@@ -4,30 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Glideways Login</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css"/>
 </head>
-<body>
-  <div class="login-hero" style="background-image: url('assets/booking-bg.jpg');">
-    <div class="login-card">
-      <img src="assets/logo.png" class="login-logo" alt="Glideways Logo">
-      <h2>Welcome aboard Glideways</h2>
-      <p>Please enter your Roblox username to continue</p>
-      
-      <form id="login-form">
-        <input type="text" id="username" placeholder="Roblox Username or ID" required />
-        <button type="submit">Continue</button>
-      </form>
-    </div>
-  </div>
+<body class="login-page">
+  <main class="login-container">
+    <img src="assets/Booking.webp" alt="Booking Background" class="booking-bg"/>
+
+    <section class="login-box">
+      <h1>Welcome to Glideways</h1>
+      <p>Please enter your Roblox username to continue.</p>
+      <input type="text" id="username" placeholder="Roblox Username" required />
+      <button id="login-btn">Continue</button>
+    </section>
+  </main>
 
   <script>
-    const form = document.getElementById('login-form');
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
+    document.getElementById('login-btn').addEventListener('click', function () {
       const username = document.getElementById('username').value.trim();
-      if (username.length > 0) {
+      if (username) {
         localStorage.setItem('glidewaysUsername', username);
-        window.location.href = "booking.html";
+        window.location.href = 'booking.html';
+      } else {
+        alert('Please enter your Roblox username.');
       }
     });
   </script>
