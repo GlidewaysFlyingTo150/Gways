@@ -1,37 +1,31 @@
-const gamepassId = 12345678; // Replace with actual First Class gamepass ID
-const username = localStorage.getItem('glidewaysUsername');
+const tabButtons = document.querySelectorAll(".tab-btn");
+const tabContents = document.querySelectorAll(".tab-content");
+const tabSlider = document.querySelector(".tab-slider");
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Tab switching
-  const tabButtons = document.querySelectorAll('.tab-btn');
-  const tabs = document.querySelectorAll('.tab-content');
-  const tabSlider = document.querySelector('.tab-slider');
+tabButtons.forEach((btn, i) => {
+  btn.addEventListener("click", () => {
+    tabButtons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
 
-  tabButtons.forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-      document.querySelector('.tab-btn.active').classList.remove('active');
-      document.querySelector('.tab-content.active').classList.remove('active');
+    tabSlider.style.transform = `translateX(${i * 100}%)`;
 
-      btn.classList.add('active');
-      tabs[index].classList.add('active');
-      tabSlider.style.transform = `translateX(${index * 100}%)`;
-    });
+    tabContents.forEach(tab => tab.classList.remove("active"));
+    document.getElementById(btn.dataset.tab).classList.add("active");
   });
+});
 
-  // Add First Class if user owns gamepass
-  if (username) {
-    fetch(`https://inventory.roblox.com/v1/users/${username}/items/GamePass/${gamepassId}`)
-      .then(res => res.json())
-      .then(data => {
-        const ownsGamepass = data?.data?.length > 0;
-        if (ownsGamepass) {
-          const classSelect = document.getElementById('class');
-          const option = document.createElement('option');
-          option.value = 'first';
-          option.textContent = 'First Class';
-          classSelect.appendChild(option);
-        }
-      })
-      .catch(err => console.error('Error checking gamepass:', err));
-  }
+document.getElementById("booking-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const username = localStorage.getItem("robloxUsername") || "Guest";
+  const flight = document.getElementById("flight").value;
+  const flightClass = document.getElementById("class").value;
+  alert(`${username} booked flight ${flight} in ${flightClass} class!`);
+
+  // You can store bookings in localStorage for now or add backend later
+});
+
+document.getElementById("status-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const flight = document.getElementById("flight-status").value;
+  alert(`Status for ${flight} will be fetched.`);
 });
